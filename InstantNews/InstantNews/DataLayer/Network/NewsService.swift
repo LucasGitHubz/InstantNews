@@ -10,7 +10,7 @@ import Foundation
 class NewsService {
     private let networkService: NetworkService
     
-    private let apiKey = Bundle.main.apiKey(for: "NewsAPIKey") ?? ""
+    private let apiKey = Bundle.main.apiKey(for: "NewsApiKey") ?? "nil"
     private let baseURL = "https://newsapi.org/v2/top-headlines"
     
     init(networkService: NetworkService) {
@@ -41,11 +41,13 @@ class NewsService {
         guard let url = URL(string: "\(baseURL)?category=\(type.rawValue)&apiKey=\(apiKey)&pageSize=1") else {
             throw NetworkError.invalidResponse
         }
-        
+
         let response: NewsResponse = try await networkService.request(from: url, decodingType: NewsResponse.self)
         
+        print("test2 \(response.articles?.count)")
         guard let latestNews = response.articles?.first else { return nil }
         
+        print("test3 \(latestNews)")
         var updatedNews = latestNews
         updatedNews.newsType = type
         

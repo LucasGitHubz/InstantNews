@@ -19,6 +19,8 @@ class NewsViewModel: ObservableObject {
 
     init(newsUseCases: NewsUseCases) {
         self.newsUseCases = newsUseCases
+
+        fetchRecentNews()
     }
 
     private func fetchRecentNews() {
@@ -27,7 +29,9 @@ class NewsViewModel: ObservableObject {
                 showRecentNewsLoader = true
                 news = try await newsUseCases.fetchRecentNews()
                 showRecentNewsLoader = false
+                print("success: \(news)")
             } catch {
+                print("error: \(error.localizedDescription)")
                 showError(with: error.localizedDescription)
             }
         }

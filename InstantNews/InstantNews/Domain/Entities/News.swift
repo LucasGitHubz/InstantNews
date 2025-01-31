@@ -9,6 +9,26 @@ import Foundation
 
 enum NewsType: String, Decodable, CaseIterable {
     case sports, business, entertainment, science, technology
+    
+    var name: String {
+        switch self {
+        case .sports: return "Sports"
+        case .business: return "Business"
+        case .entertainment: return "Entertainment"
+        case .science: return "Science"
+        case .technology: return "Technology"
+        }
+    }
+
+    var imageName: String {
+        switch self {
+        case .sports: return "soccerball"
+        case .business: return "chart.bar"
+        case .entertainment: return "music.note"
+        case .science: return "atom"
+        case .technology: return "cpu"
+        }
+    }
 }
 
 struct NewsResponse: Decodable {
@@ -17,8 +37,7 @@ struct NewsResponse: Decodable {
     let articles: [News]?
 }
 
-struct News: Decodable, Identifiable {
-    let id = UUID()
+struct News: Decodable {
     let source: Source
     let author: String?
     let title: String?

@@ -43,7 +43,7 @@ struct ContentView: View {
     func displayAssociatedView(type: TabBarType) -> some View {
         switch type {
         case .news: return AnyView(NewsView(viewModel: NewsViewModel(newsUseCases: NewsUseCasesImpl(repository: NewsRepositoryImpl(newsService: NewsService(networkService: NetworkService()))))))
-        case .favorite: return AnyView(FavoriteView())
+        case .favorite: return AnyView(FavoriteView(viewModel: FavoriteViewModel(favoritesUseCases: FavoritesUseCasesImpl())))
         }
     }
 }

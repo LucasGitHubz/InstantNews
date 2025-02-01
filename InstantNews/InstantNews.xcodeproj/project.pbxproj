@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A0041E362D4EDC58004C7DC3 /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = A0041E352D4EDC58004C7DC3 /* Shimmer */; };
 		A01920252D4CF98D00F87A28 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = A01920242D4CF98D00F87A28 /* Kingfisher */; };
 		A01A1FB42D4C04CF00186311 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A01A1FB32D4C04CF00186311 /* Secrets.xcconfig */; };
 /* End PBXBuildFile section */
@@ -71,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0041E362D4EDC58004C7DC3 /* Shimmer in Frameworks */,
 				A01920252D4CF98D00F87A28 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -134,6 +136,7 @@
 			name = InstantNews;
 			packageProductDependencies = (
 				A01920242D4CF98D00F87A28 /* Kingfisher */,
+				A0041E352D4EDC58004C7DC3 /* Shimmer */,
 			);
 			productName = InstantNews;
 			productReference = A01A1F742D4BDD3F00186311 /* InstantNews.app */;
@@ -219,6 +222,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				A01920232D4CF98D00F87A28 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				A0041E342D4EDC58004C7DC3 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A01A1F752D4BDD3F00186311 /* Products */;
@@ -598,6 +602,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A0041E342D4EDC58004C7DC3 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/markiv/SwiftUI-Shimmer";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.1;
+			};
+		};
 		A01920232D4CF98D00F87A28 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher";
@@ -609,6 +621,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A0041E352D4EDC58004C7DC3 /* Shimmer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A0041E342D4EDC58004C7DC3 /* XCRemoteSwiftPackageReference "SwiftUI-Shimmer" */;
+			productName = Shimmer;
+		};
 		A01920242D4CF98D00F87A28 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A01920232D4CF98D00F87A28 /* XCRemoteSwiftPackageReference "Kingfisher" */;

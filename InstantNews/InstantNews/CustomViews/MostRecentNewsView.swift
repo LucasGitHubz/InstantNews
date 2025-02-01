@@ -6,9 +6,11 @@
 //
 
 import Kingfisher
+import Shimmer
 import SwiftUI
 
 struct MostRecentNewsView: View {
+    @Binding var isLoading: Bool
     @State private var currentIndex = 0
 
     let news: [News]
@@ -17,7 +19,7 @@ struct MostRecentNewsView: View {
         VStack(spacing: 0) {
             HStack {
                 Text("Dernières News")
-                    .font(.headline)
+                    .font(.title3.weight(.semibold))
                     .foregroundStyle(.darkCharcoal)
                     .padding(.top, 25)
                     .padding(.horizontal)
@@ -29,37 +31,50 @@ struct MostRecentNewsView: View {
                         NewsDetailsView(favoriteUseCases: FavoritesUseCasesImpl(), news: news[index])
                     } label: {
                         ZStack {
-                            KFImage(URL(string: news[index].urlToImage ?? ""))
-                                .placeholder {
-                                    Image("placeholder")
-                                        .resizable()
-                                }
-                                .resizable()
-                            LinearGradient(colors: [.clear, .darkCharcoal.opacity(0.4), .darkCharcoal], startPoint: .top, endPoint: .bottom)
-                            VStack(alignment: .leading) {
-                                HStack {
-                                    Spacer()
-                                    HStack {
-                                        Image(systemName: news[index].newsType?.imageName ?? "soccerball")
-                                            .foregroundStyle(.darkCharcoal)
-                                        Text(news[index].newsType?.name ?? "Sport")
-                                            .font(.footnote.bold())
-                                            .foregroundStyle(.darkCharcoal)
+                            ZStack {
+                                KFImage(URL(string: news[index].urlToImage ?? ""))
+                                    .placeholder {
+                                        Image("placeholder")
+                                            .resizable()
                                     }
-                                    .padding(.vertical, 5)
-                                    .padding(.horizontal, 8)
-                                    .background(.white)
-                                    .clipShape(.capsule)
+                                    .resizable()
+                                LinearGradient(colors: [.clear, .darkCharcoal.opacity(0.4), .darkCharcoal], startPoint: .top, endPoint: .bottom)
+                            }
+                            .redacted(reason: isLoading ? .placeholder : [])
+                            .shimmering(active: isLoading ? true : false)
+                            VStack(alignment: .leading) {
+                                if !isLoading {
+                                    HStack {
+                                        Spacer()
+                                        HStack {
+                                            Image(systemName: news[index].newsType?.imageName ?? "soccerball")
+                                                .foregroundStyle(.darkCharcoal)
+                                            Text(news[index].newsType?.name ?? "Sport")
+                                                .font(.footnote.bold())
+                                                .foregroundStyle(.darkCharcoal)
+                                        }
+                                        .padding(.vertical, 5)
+                                        .padding(.horizontal, 8)
+                                        .background(.white)
+                                        .clipShape(.capsule)
+                                    }
                                 }
                                 Spacer()
-                                Text(news[index].source.name ?? "")
-                                    .font(.subheadline.bold())
-                                    .foregroundStyle(.white.opacity(0.9))
-                                    .padding(.bottom, 1)
-                                Text(news[index].title ?? "")
-                                    .font(.body.weight(.medium))
-                                    .multilineTextAlignment(.leading)
-                                    .foregroundStyle(.white)
+                                VStack {
+                                    HStack {
+                                        Text(news[index].source.name ?? "")
+                                            .font(.subheadline.bold())
+                                            .foregroundStyle(.white.opacity(0.9))
+                                            .padding(.bottom, 1)
+                                        Spacer()
+                                    }
+                                    Text(news[index].title ?? "")
+                                        .font(.body.weight(.medium))
+                                        .multilineTextAlignment(.leading)
+                                        .foregroundStyle(.white)
+                                }
+                                .redacted(reason: isLoading ? .placeholder : [])
+                                .shimmering(active: isLoading ? true : false)
                             }
                             .padding()
                         }
@@ -88,5 +103,5 @@ struct MostRecentNewsView: View {
 }
 
 #Preview {
-    MostRecentNewsView(news: [])
+    MostRecentNewsView(isLoading: .constant(true), news: [])
 }

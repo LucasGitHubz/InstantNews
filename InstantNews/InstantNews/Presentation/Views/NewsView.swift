@@ -6,11 +6,12 @@
 //
 
 import Kingfisher
+import Shimmer
 import SwiftUI
 
 struct NewsView: View {
     @ObservedObject var viewModel: NewsViewModel
-
+    
     @State private var selectedTypeIndex = 0
     
     var body: some View {
@@ -19,7 +20,7 @@ struct NewsView: View {
                 .ignoresSafeArea()
             ScrollView {
                 VStack(alignment: .leading) {
-                    MostRecentNewsView(news: viewModel.mostRecentNews)
+                    MostRecentNewsView(isLoading: $viewModel.isFirstLoading, news: viewModel.mostRecentNews)
                     ScrollView(.horizontal) {
                         HStack {
                             NewsTypeButtonView(isSelected: viewModel.selectedTypeIndex == 0, name: "Tous") {
@@ -40,11 +41,22 @@ struct NewsView: View {
                                 NewsDetailsView(favoriteUseCases: FavoritesUseCasesImpl(), news: viewModel.filteredNews[index])
                             } label: {
                                 NewsListView(news: viewModel.filteredNews[index])
+                                    .onAppear {
+                                        if index == viewModel.filteredNews.count - 1 {
+                                            viewModel.fetchNews(loadMore: true)
+                                        }
+                                    }
                             }
                             .animation(.spring(response: 0.2, dampingFraction: 0.9, blendDuration: 0), value: viewModel.selectedTypeIndex)
                         }
+                        if viewModel.isLoadingMore {
+                            ProgressView()
+                                .padding()
+                        }
                     }
                     .padding()
+                    .redacted(reason: viewModel.isFirstLoading ? .placeholder : [])
+                    .shimmering(active: viewModel.isFirstLoading ? true : false)
                 }
                 .padding(.bottom, 60)
             }

@@ -17,13 +17,13 @@ class NewsService {
         self.networkService = networkService
     }
     
-    func fetchNewsFromAllType() async throws -> [News] {
+    func fetchNewsFromAllType(page: Int, pageSize: Int = 10) async throws -> [News] {
         var newsArray: [News] = []
         
         try await withThrowingTaskGroup(of: [News].self) { group in
             for newsType in NewsType.allCases {
                 group.addTask {
-                    return try await self.fetchNews(for: newsType)
+                    return try await self.fetchNews(for: newsType, page: page, pageSize: pageSize)
                 }
             }
             
@@ -35,8 +35,8 @@ class NewsService {
         return newsArray
     }
     
-    private func fetchNews(for type: NewsType) async throws -> [News] {
-        guard let url = URL(string: "\(baseURL)?q=\(type.rawValue)&apiKey=\(apiKey)&pageSize=\(10)&language=fr") else {
+    private func fetchNews(for type: NewsType, page: Int, pageSize: Int) async throws -> [News] {
+        guard let url = URL(string: "\(baseURL)?q=\(type.rawValue)&apiKey=\(apiKey)&page=\(page)&pageSize=\(pageSize)&language=fr") else {
             throw NetworkError.invalidResponse
         }
 

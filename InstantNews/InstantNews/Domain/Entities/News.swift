@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum NewsType: String, Decodable, CaseIterable {
+enum NewsType: String, Codable, CaseIterable {
     case sports, business, entertainment, science, technology
     
     var name: String {
@@ -29,15 +29,25 @@ enum NewsType: String, Decodable, CaseIterable {
         case .technology: return "cpu"
         }
     }
+
+    var index: Int {
+        switch self {
+        case .sports: return 1
+        case .business: return 2
+        case .entertainment: return 3
+        case .science: return 4
+        case .technology: return 5
+        }
+    }
 }
 
-struct NewsResponse: Decodable {
+struct NewsResponse: Codable {
     let status: String?
     let totalResults: Int?
     let articles: [News]?
 }
 
-struct News: Decodable {
+struct News: Codable {
     let source: Source
     let author: String?
     let title: String?
@@ -49,7 +59,7 @@ struct News: Decodable {
     var newsType: NewsType?
 }
 
-struct Source: Decodable {
+struct Source: Codable {
     let id: String?
     let name: String?
 }

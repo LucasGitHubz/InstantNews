@@ -11,7 +11,7 @@ import SwiftUI
 struct NewsView: View {
     @ObservedObject var viewModel: NewsViewModel
 
-    @State private var currentIndex = 0
+    @State private var selectedTypeIndex = 0
     
     var body: some View {
         ZStack {
@@ -19,75 +19,32 @@ struct NewsView: View {
                 .ignoresSafeArea()
             ScrollView {
                 VStack(alignment: .leading) {
-                    VStack(spacing: 0) {
+                    MostRecentNewsView(news: viewModel.mostRecentNews)
+                    ScrollView(.horizontal) {
                         HStack {
-                            Text("Dernières News")
-                                .font(.headline)
-                                .padding(.top, 25)
-                                .padding(.horizontal)
-                            Spacer()
-                        }
-                        TabView(selection: $currentIndex) {
-                            ForEach(viewModel.news.indices, id: \.self) { index in
-                                NavigationLink {
-                                    Text("")
-                                } label: {
-                                    ZStack {
-                                        KFImage(URL(string: viewModel.news[index].urlToImage ?? ""))
-                                            .placeholder {
-                                                Image("placeholder")
-                                                    .resizable()
-                                            }
-                                            .resizable()
-                                        LinearGradient(colors: [.clear, .darkCharcoal.opacity(0.4), .darkCharcoal], startPoint: .top, endPoint: .bottom)
-                                        VStack(alignment: .leading) {
-                                            HStack {
-                                                Spacer()
-                                                HStack {
-                                                    Image(systemName: viewModel.news[index].newsType?.imageName ?? "soccerball")
-                                                        .foregroundStyle(.darkCharcoal)
-                                                    Text(viewModel.news[index].newsType?.name ?? "Sport")
-                                                        .font(.footnote.bold())
-                                                        .foregroundStyle(.darkCharcoal)
-                                                }
-                                                .padding(.vertical, 5)
-                                                .padding(.horizontal, 8)
-                                                .background(.white)
-                                                .clipShape(.capsule)
-                                            }
-                                            Spacer()
-                                            Text(viewModel.news[index].source.name ?? "")
-                                                .font(.subheadline.bold())
-                                                .foregroundStyle(.white.opacity(0.9))
-                                                .padding(.bottom, 1)
-                                            Text(viewModel.news[index].title ?? "")
-                                                .font(.body.weight(.medium))
-                                                .multilineTextAlignment(.leading)
-                                                .foregroundStyle(.white)
-                                        }
-                                        .padding()
-                                    }
-                                    .frame(height: 200)
-                                    .clipShape(.rect(cornerRadius: 15))
-                                    .shadow(radius: 5)
-                                    .padding()
-                                    
+                            NewsTypeButtonView(isSelected: viewModel.selectedTypeIndex == 0, name: "Tous") {
+                                viewModel.filterNewsBasedOnTypeIndex(0)
+                            }
+                            ForEach(NewsType.allCases, id: \.self) { type in
+                                NewsTypeButtonView(isSelected: viewModel.selectedTypeIndex == type.index, name: type.rawValue) {
+                                    viewModel.filterNewsBasedOnTypeIndex(type.index)
                                 }
-                                .tag(index)
                             }
                         }
-                        .frame(height: 230)
-                        .tabViewStyle(.page(indexDisplayMode: .never))
-                        HStack(spacing:7) {
-                            ForEach(viewModel.news.indices, id: \.self) { index in
-                                Capsule()
-                                    .frame(width: currentIndex == index ? 20 : 8, height: 8)
-                                    .foregroundColor(currentIndex == index ? .darkCharcoal : .gray.opacity(0.4))
-                                    .animation(.spring(response: 0.2, dampingFraction: 0.9, blendDuration: 0), value: currentIndex)
-                            }
-                        }
-                        .padding(.bottom)
+                        .padding(.horizontal)
                     }
+                    .scrollIndicators(.hidden)
+                    LazyVStack(spacing: 10) {
+                        ForEach(viewModel.filteredNews.indices, id: \.self) { index in
+                            NavigationLink {
+                                NewsDetailsView(favoriteUseCases: FavoritesUseCasesImpl(), news: viewModel.filteredNews[index])
+                            } label: {
+                                NewsListView(news: viewModel.filteredNews[index])
+                            }
+                            .animation(.spring(response: 0.2, dampingFraction: 0.9, blendDuration: 0), value: viewModel.selectedTypeIndex)
+                        }
+                    }
+                    .padding()
                 }
             }
         }

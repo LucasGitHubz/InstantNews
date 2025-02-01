@@ -39,6 +39,7 @@ struct ContentView: View {
                 }
             }
         }
+        .tint(.white)
     }
 
     func displayAssociatedView(type: TabBarType) -> some View {

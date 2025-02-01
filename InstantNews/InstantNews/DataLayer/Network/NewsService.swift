@@ -43,11 +43,9 @@ class NewsService {
         }
 
         let response: NewsResponse = try await networkService.request(from: url, decodingType: NewsResponse.self)
-        
-        print("test2 \(response.articles?.count)")
+
         guard let latestNews = response.articles?.first else { return nil }
-        
-        print("test3 \(latestNews)")
+
         var updatedNews = latestNews
         updatedNews.newsType = type
         

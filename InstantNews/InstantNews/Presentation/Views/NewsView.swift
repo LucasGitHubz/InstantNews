@@ -46,6 +46,7 @@ struct NewsView: View {
                     }
                     .padding()
                 }
+                .padding(.bottom, 60)
             }
         }
         .navigationTitle("Instant News")

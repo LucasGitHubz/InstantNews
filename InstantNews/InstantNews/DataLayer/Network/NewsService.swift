@@ -11,44 +11,43 @@ class NewsService {
     private let networkService: NetworkService
     
     private let apiKey = Bundle.main.apiKey(for: "NewsApiKey") ?? "nil"
-    private let baseURL = "https://newsapi.org/v2/top-headlines"
+    private let baseURL = "https://newsapi.org/v2/everything"
     
     init(networkService: NetworkService) {
         self.networkService = networkService
     }
     
-    func fetchRecentsNews() async throws -> [News] {
+    func fetchNewsFromAllType() async throws -> [News] {
         var newsArray: [News] = []
         
-        try await withThrowingTaskGroup(of: News?.self) { group in
+        try await withThrowingTaskGroup(of: [News].self) { group in
             for newsType in NewsType.allCases {
                 group.addTask {
-                    return try await self.fetchLatestNews(for: newsType)
+                    return try await self.fetchNews(for: newsType)
                 }
             }
             
             for try await news in group {
-                if let news = news {
-                    newsArray.append(news)
-                }
+                newsArray += news
             }
         }
         
         return newsArray
     }
     
-    private func fetchLatestNews(for type: NewsType) async throws -> News? {
-        guard let url = URL(string: "\(baseURL)?category=\(type.rawValue)&apiKey=\(apiKey)&pageSize=1") else {
+    private func fetchNews(for type: NewsType) async throws -> [News] {
+        guard let url = URL(string: "\(baseURL)?q=\(type.rawValue)&apiKey=\(apiKey)&pageSize=\(10)&language=fr") else {
             throw NetworkError.invalidResponse
         }
 
         let response: NewsResponse = try await networkService.request(from: url, decodingType: NewsResponse.self)
 
-        guard let latestNews = response.articles?.first else { return nil }
+        guard var fetchedNews = response.articles else { return [] }
 
-        var updatedNews = latestNews
-        updatedNews.newsType = type
+        for index in 0..<fetchedNews.count {
+            fetchedNews[index].newsType = type
+        }
         
-        return updatedNews
+        return fetchedNews
     }
 }

@@ -18,6 +18,7 @@ struct MostRecentNewsView: View {
             HStack {
                 Text("Dernières News")
                     .font(.headline)
+                    .foregroundStyle(.darkCharcoal)
                     .padding(.top, 25)
                     .padding(.horizontal)
                 Spacer()
@@ -25,7 +26,7 @@ struct MostRecentNewsView: View {
             TabView(selection: $currentIndex) {
                 ForEach(news.indices, id: \.self) { index in
                     NavigationLink {
-                        Text("")
+                        NewsDetailsView(favoriteUseCases: FavoritesUseCasesImpl(), news: news[index])
                     } label: {
                         ZStack {
                             KFImage(URL(string: news[index].urlToImage ?? ""))

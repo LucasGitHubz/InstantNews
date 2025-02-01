@@ -15,12 +15,12 @@ struct CustomTabBar: View {
     @Binding var selectedTab: TabBarType
     
     var body: some View {
-        HStack(spacing: 50) {
+        HStack(spacing: 45) {
             ForEach(TabBarType.allCases, id: \.self) { tab in
                 Image(systemName: fetchIconName(type: tab))
-                    .scaleEffect(tab == selectedTab ? 1.14 : 1.0)
+                    .scaleEffect(tab == selectedTab ? 1.1 : 1.0)
                     .foregroundColor(tab == selectedTab ? .white : .black.opacity(0.8))
-                    .font(.system(size: 19))
+                    .font(.system(size: 18))
                     .onTapGesture {
                         withAnimation(.spring(response: 0.2, dampingFraction: 0.9, blendDuration: 0)) {
                             selectedTab = tab
@@ -32,8 +32,8 @@ struct CustomTabBar: View {
                     .clipShape(.capsule)
             }
         }
-        .frame(height: 62)
-        .padding(.horizontal, 6.5)
+        .frame(height: 60)
+        .padding(.horizontal, 4.5)
         .background(.white)
         .clipShape(.capsule)
         .shadow(color: .darkCharcoal.opacity(0.25), radius: 5)

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol NewsUseCases {
-    func fetchRecentNews() async throws -> [News]
+    func fetchNews() async throws -> [News]
 }
 
 class NewsUseCasesImpl: NewsUseCases {
@@ -18,7 +18,7 @@ class NewsUseCasesImpl: NewsUseCases {
         self.repository = repository
     }
 
-    func fetchRecentNews() async throws -> [News] {
-        return try await repository.fetchRecentsNews()
+    func fetchNews() async throws -> [News] {
+        return try await repository.fetchNews()
     }
 }

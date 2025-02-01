@@ -24,19 +24,17 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack {
-            ZStack {
-                TabView(selection: $tabSelected) {
-                    NavigationView {
-                        displayAssociatedView(type: tabSelected)
-                            .id(appState.rootViewId)
-                    }
-                    .navigationViewStyle(StackNavigationViewStyle())
-                    .accentColor(.white)
+            TabView(selection: $tabSelected) {
+                NavigationView {
+                    displayAssociatedView(type: tabSelected)
+                        .id(appState.rootViewId)
                 }
-                VStack {
-                    Spacer()
-                    CustomTabBar(selectedTab: $tabSelected)
-                }
+                .navigationViewStyle(StackNavigationViewStyle())
+                .accentColor(.white)
+            }
+            .safeAreaInset(edge: .bottom) {
+                CustomTabBar(selectedTab: $tabSelected)
+                    .ignoresSafeArea()
             }
         }
         .tint(.white)

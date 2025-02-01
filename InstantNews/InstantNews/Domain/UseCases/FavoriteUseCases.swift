@@ -34,6 +34,7 @@ class FavoritesUseCasesImpl: FavoritesUseCases {
         do {
             let encoded = try JSONEncoder().encode(favorites)
             UserDefaults.standard.set(encoded, forKey: userDefaultsKey)
+            print("testtest \(try await getFavorites())")
         } catch {
             print("❌ Error encoding favorites: \(error)")
             throw error
@@ -67,7 +68,7 @@ class FavoritesUseCasesImpl: FavoritesUseCases {
         if isFavorite {
             try await removeFromFavorites(news: news)
         } else {
-            try await removeFromFavorites(news: news)
+            try await saveToFavorites(news: news)
         }
     }
 }

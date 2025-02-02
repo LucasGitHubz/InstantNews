@@ -60,7 +60,7 @@ struct MostRecentNewsView: View {
                                     }
                                 }
                                 Spacer()
-                                VStack {
+                                VStack(alignment: .leading) {
                                     HStack {
                                         Text(news[index].source.name ?? "")
                                             .font(.subheadline.bold())

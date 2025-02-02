@@ -29,8 +29,33 @@ struct NewsDetailsView: View {
                                     .frame(height: 300)
                             }
                             .resizable()
+                            .frame(height: 300)
                         LinearGradient(colors: [.clear,.darkCharcoal.opacity(0.4), .darkCharcoal], startPoint: .top, endPoint: .bottom)
                         VStack(alignment: .leading, spacing: 10) {
+                            Spacer()
+                            HStack {
+                                HStack {
+                                    Image(systemName: news.newsType?.imageName ?? "soccerball")
+                                        .foregroundStyle(.darkCharcoal)
+                                    Text(news.newsType?.name ?? "Sport")
+                                        .font(.footnote.bold())
+                                        .foregroundStyle(.darkCharcoal)
+                                }
+                                .padding(.vertical, 5)
+                                .padding(.horizontal, 8)
+                                .background(.white)
+                                .clipShape(.capsule)
+                                Spacer()
+                            }
+                            Text(news.title ?? "Pas de titre")
+                                .font(.headline)
+                                .foregroundStyle(.white)
+                            Text(news.publishedAt?.formattedAsNewsDate() ?? "")
+                                .font(.caption.weight(.medium))
+                                .foregroundStyle(.white)
+                        }
+                        .padding()
+                        VStack {
                             HStack {
                                 Spacer()
                                 Button {
@@ -55,33 +80,13 @@ struct NewsDetailsView: View {
                             }
                             .padding(.top, geometry.safeAreaInsets.top)
                             Spacer()
-                            HStack {
-                                HStack {
-                                    Image(systemName: news.newsType?.imageName ?? "soccerball")
-                                        .foregroundStyle(.darkCharcoal)
-                                    Text(news.newsType?.name ?? "Sport")
-                                        .font(.footnote.bold())
-                                        .foregroundStyle(.darkCharcoal)
-                                }
-                                .padding(.vertical, 5)
-                                .padding(.horizontal, 8)
-                                .background(.white)
-                                .clipShape(.capsule)
-                                Spacer()
-                            }
-                            Text(news.title ?? "Pas de titre")
-                                .font(.headline)
-                                .foregroundStyle(.white)
-                            Text(news.publishedAt?.formattedAsNewsDate() ?? "")
-                                .font(.caption.weight(.medium))
-                                .foregroundStyle(.white)
                         }
-                        .padding()
+                        .padding(.horizontal)
                     }
                     .frame(height: 300)
                     ZStack {
                         Color.darkCharcoal.ignoresSafeArea()
-                        VStack(spacing: 10) {
+                        VStack(alignment: .leading, spacing: 10) {
                             HStack {
                                 Text(news.source.name ?? "")
                                     .font(.headline)
@@ -91,6 +96,17 @@ struct NewsDetailsView: View {
                             Text(news.description ?? "")
                                 .font(.subheadline.weight(.medium))
                                 .foregroundStyle(.darkCharcoal)
+                                .multilineTextAlignment(.leading)
+                            if let articleURL = news.url, let url = URL(string: articleURL) {
+                                Button {
+                                    UIApplication.shared.open(url)
+                                } label: {
+                                    Text("Lire l'article complet")
+                                        .underline(true, pattern: .solid)
+                                        .foregroundStyle(Color.teal)
+                                }
+                            }
+                            
                             Spacer()
                         }
                         .padding()

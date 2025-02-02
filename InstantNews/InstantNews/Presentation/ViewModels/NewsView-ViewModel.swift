@@ -34,22 +34,22 @@ class NewsViewModel: ObservableObject {
     init(newsUseCases: NewsUseCases) {
         self.newsUseCases = newsUseCases
         
-        // Used here to placeholder when first launching
+        // Used here as placeholder when first launching
         filteredNews = news
         updateMostRecentNews(news)
 
-        /*Task {
+        Task {
             await fetchNews()
-        }*/
+        }
     }
     
     func fetchNews(loadMore: Bool = false) async {
         guard !isLoadingMore, hasMoreNews else { return }
-        isLoadingMore = loadMore
         Task {
             do {
                 let fetchedNews = try await newsUseCases.fetchNews(page: currentPage).shuffled()
                 await MainActor.run {
+                    isLoadingMore = loadMore
                     if fetchedNews.isEmpty {
                         hasMoreNews = false
                     } else {

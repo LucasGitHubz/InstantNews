@@ -69,7 +69,7 @@ struct NewsDetailsView: View {
                                 .clipShape(.capsule)
                                 Spacer()
                             }
-                            Text(news.title ?? "No title")
+                            Text(news.title ?? "Pas de titre")
                                 .font(.headline)
                                 .foregroundStyle(.white)
                             Text(news.publishedAt?.formattedAsNewsDate() ?? "")

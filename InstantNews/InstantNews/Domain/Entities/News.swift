@@ -14,9 +14,9 @@ enum NewsType: String, Codable, CaseIterable {
         switch self {
         case .sports: return "Sports"
         case .business: return "Business"
-        case .entertainment: return "Entertainment"
+        case .entertainment: return "Divertissement"
         case .science: return "Science"
-        case .technology: return "Technology"
+        case .technology: return "Technologie"
         }
     }
 

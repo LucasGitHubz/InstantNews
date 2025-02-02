@@ -49,7 +49,7 @@ struct MostRecentNewsView: View {
                                         HStack {
                                             Image(systemName: news[index].newsType?.imageName ?? "soccerball")
                                                 .foregroundStyle(.darkCharcoal)
-                                            Text(news[index].newsType?.name ?? "Sport")
+                                            Text(news[index].newsType?.name ?? "Sports")
                                                 .font(.footnote.bold())
                                                 .foregroundStyle(.darkCharcoal)
                                         }

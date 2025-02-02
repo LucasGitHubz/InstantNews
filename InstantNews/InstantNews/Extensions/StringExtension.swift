@@ -13,7 +13,7 @@ extension String {
         isoFormatter.formatOptions = [.withInternetDateTime]
         
         guard let date = isoFormatter.date(from: self) else {
-            return "Invalid Date"
+            return "Date non valide"
         }
         
         let formatter = DateFormatter()

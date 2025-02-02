@@ -33,13 +33,13 @@ struct NewsListView: View {
                             .foregroundStyle(.darkCharcoal.opacity(0.4))
                     }
                     Spacer()
-                    Text(news.title ?? "No title")
+                    Text(news.title ?? "Pas de titre")
                         .font(.footnote.bold())
                         .foregroundStyle(.darkCharcoal)
                         .multilineTextAlignment(.leading)
                     Spacer()
                     HStack {
-                        Text(news.author ?? news.source.name ?? "No source")
+                        Text(news.author ?? news.source.name ?? "Pas de source")
                             .font(.caption)
                             .foregroundStyle(.darkCharcoal.opacity(0.4))
                         Spacer()

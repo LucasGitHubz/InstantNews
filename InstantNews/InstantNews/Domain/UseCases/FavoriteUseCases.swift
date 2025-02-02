@@ -30,11 +30,10 @@ class FavoritesUseCasesImpl: FavoritesUseCases {
         }
     }
 
-    private func saveFavorites(_ favorites: [News]) async throws {
+    func saveFavorites(_ favorites: [News]) async throws {
         do {
             let encoded = try JSONEncoder().encode(favorites)
             UserDefaults.standard.set(encoded, forKey: userDefaultsKey)
-            print("testtest \(try await getFavorites())")
         } catch {
             print("❌ Error encoding favorites: \(error)")
             throw error

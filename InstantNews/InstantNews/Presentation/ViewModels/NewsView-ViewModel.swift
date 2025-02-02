@@ -38,10 +38,12 @@ class NewsViewModel: ObservableObject {
         filteredNews = news
         updateMostRecentNews(news)
 
-        fetchNews()
+        /*Task {
+            await fetchNews()
+        }*/
     }
     
-    func fetchNews(loadMore: Bool = false) {
+    func fetchNews(loadMore: Bool = false) async {
         guard !isLoadingMore, hasMoreNews else { return }
         isLoadingMore = loadMore
         Task {
@@ -67,7 +69,9 @@ class NewsViewModel: ObservableObject {
                     isLoadingMore = false
                 }
             } catch {
-                showError(with: error.localizedDescription)
+                await MainActor.run {
+                    showError(with: error.localizedDescription)
+                }
             }
         }
     }

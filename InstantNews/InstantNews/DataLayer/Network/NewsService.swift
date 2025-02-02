@@ -8,12 +8,12 @@
 import Foundation
 
 class NewsService {
-    private let networkService: NetworkService
+    private let networkService: NetworkServiceProtocol
     
     private let apiKey = Bundle.main.apiKey(for: "NewsApiKey") ?? "nil"
     private let baseURL = "https://newsapi.org/v2/everything"
     
-    init(networkService: NetworkService) {
+    init(networkService: NetworkServiceProtocol) {
         self.networkService = networkService
     }
     

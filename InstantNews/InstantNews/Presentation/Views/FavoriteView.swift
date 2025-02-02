@@ -38,7 +38,9 @@ struct FavoriteView: View {
                 .listStyle(.plain)
                 .background(.beige)
                 .onAppear {
-                    viewModel.getFavoritesNews()
+                    Task {
+                        await viewModel.getFavoritesNews()
+                    }
                 }
             }
         }

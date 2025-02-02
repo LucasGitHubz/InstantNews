@@ -13,24 +13,24 @@ class FavoriteViewModel: ObservableObject {
     @Published var errorMessage = ""
     @Published var showAlert = false
     
-    private let favoritesUseCases: FavoritesUseCases
+    let favoritesUseCases: FavoritesUseCases
     
     init(favoritesUseCases: FavoritesUseCases) {
         self.favoritesUseCases = favoritesUseCases
         
-        getFavoritesNews()
+        Task {
+            await getFavoritesNews()
+        }
     }
     
-    func getFavoritesNews() {
-        Task {
-            do {
-                let fetchedFavoriteNews = try await favoritesUseCases.getFavorites()
-                await MainActor.run {
-                    favoritesNews = fetchedFavoriteNews
-                }
-            } catch {
-                showError(error.localizedDescription)
+    func getFavoritesNews() async {
+        do {
+            let fetchedFavoriteNews = try await favoritesUseCases.getFavorites()
+            await MainActor.run {
+                favoritesNews = fetchedFavoriteNews
             }
+        } catch {
+            showError(error.localizedDescription)
         }
     }
     

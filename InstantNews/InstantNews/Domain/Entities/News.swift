@@ -47,7 +47,7 @@ struct NewsResponse: Codable {
     let articles: [News]?
 }
 
-struct News: Codable {
+struct News: Codable, Equatable {
     let source: Source
     let author: String?
     let title: String?
@@ -57,6 +57,10 @@ struct News: Codable {
     let publishedAt: String?
     let content: String?
     var newsType: NewsType?
+
+    static func == (lhs: News, rhs: News) -> Bool {
+        return lhs.url == rhs.url
+    }
 }
 
 struct Source: Codable {

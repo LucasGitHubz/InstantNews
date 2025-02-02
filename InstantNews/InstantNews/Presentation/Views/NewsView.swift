@@ -41,11 +41,13 @@ struct NewsView: View {
                                 NewsDetailsView(favoriteUseCases: FavoritesUseCasesImpl(), news: viewModel.filteredNews[index])
                             } label: {
                                 NewsListView(news: viewModel.filteredNews[index])
-                                    .onAppear {
+                                    /*.onAppear {
                                         if index == viewModel.filteredNews.count - 1 {
-                                            viewModel.fetchNews(loadMore: true)
+                                            Task {
+                                                await viewModel.fetchNews(loadMore: true)
+                                            }
                                         }
-                                    }
+                                    }*/
                             }
                             .animation(.spring(response: 0.2, dampingFraction: 0.9, blendDuration: 0), value: viewModel.selectedTypeIndex)
                         }

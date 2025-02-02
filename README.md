@@ -65,6 +65,7 @@ Cependant, voici quelques fonctionnalités pour une potentielle évolution:
 - TabBar custom.
 - Views réutilisables dans le dossier CustomViews.
 - Logique de placeholder avec l'import de la libraire Shimmer pour une UX plus sympa. Pareil pour l'ajout des Haptics (j'adore).
+- Kingfisher librairie utilisée pour les images.
 - Sécurisation de la clef API avec extension Bundle et extension String pour le formatage de Date.
 - Enregistrement via UserDefaults des articles.
 

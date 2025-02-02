@@ -25,6 +25,7 @@ struct NewsTypeButtonView: View {
                 .background(isSelected ? .darkCharcoal : .white)
                 .clipShape(.rect(cornerRadius: 10))
         }
+        .sensoryFeedback(.impact(flexibility: .soft, intensity: 1), trigger: isSelected)
     }
 }
 

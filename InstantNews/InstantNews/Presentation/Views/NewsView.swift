@@ -27,7 +27,7 @@ struct NewsView: View {
                                 viewModel.filterNewsBasedOnTypeIndex(0)
                             }
                             ForEach(NewsType.allCases, id: \.self) { type in
-                                NewsTypeButtonView(isSelected: viewModel.selectedTypeIndex == type.index, name: type.rawValue) {
+                                NewsTypeButtonView(isSelected: viewModel.selectedTypeIndex == type.index, name: type.name) {
                                     viewModel.filterNewsBasedOnTypeIndex(type.index)
                                 }
                             }

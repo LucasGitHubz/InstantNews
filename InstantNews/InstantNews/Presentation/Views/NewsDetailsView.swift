@@ -77,6 +77,7 @@ struct NewsDetailsView: View {
                                         .clipShape(.circle)
                                         .animation(.interpolatingSpring, value: isFavorite)
                                 }
+                                .sensoryFeedback(.success, trigger: isFavorite)
                             }
                             .padding(.top, geometry.safeAreaInsets.top)
                             Spacer()

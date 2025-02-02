@@ -66,6 +66,7 @@ class NewsViewModel: ObservableObject {
                         }
                         currentPage += 1
                     }
+                    filterNewsBasedOnTypeIndex(selectedTypeIndex)
                     isLoadingMore = false
                 }
             } catch {

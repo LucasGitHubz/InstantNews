@@ -28,7 +28,7 @@ struct NewsListView: View {
                     .clipShape(.rect(cornerRadius: 12))
                 VStack(alignment: .leading) {
                     HStack {
-                        Text(news.newsType?.rawValue.capitalized ?? "Sports")
+                        Text(news.newsType?.name ?? "Sports")
                             .font(.footnote)
                             .foregroundStyle(.darkCharcoal.opacity(0.4))
                     }

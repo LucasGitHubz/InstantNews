@@ -58,6 +58,8 @@ Cependant, voici quelques fonctionnalités pour une potentielle évolution:
 - Créer une db pour implémenter une inscription/connexion, ainsi que la possibilité de save les news en remote.
 - Changer d'API ou bien implémenter un système de traduction pour complémenter et palier aux problèmes/limites cité(e)s plus haut.
 - Pouvoir changer la langue des articles reçus ainsi que celle de l'application.
+- Pouvoir set des notifications, par exemple suivant le type de news.
+- Permettre à l'user de filtrer les news en fonction de la date de publication.
 - Mettre des mots clefs dans l'info.plist, du style (BBC, info, News, Times, etc...) pour que l'app ressorte mieux quand l'user cherche une app (et même/surtout une app concurrente) dans la barre de recherche dans son iPhone. Ça permet d'augmenter la rétention user.
 
 ## Résumé des particularités:
